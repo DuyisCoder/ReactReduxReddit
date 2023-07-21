@@ -1,20 +1,28 @@
 import { useState } from "react";
 import Input from "../InputFiels/Input";
 import './Post.css'
-function MakePost({setOpenPost}) {
+import { useDispatch } from "react-redux";
+import { createPost } from "../../Redux/PostSlice";
+function MakePost({setOpenPost,setLoading}) {
   const [title,setTitle]=useState('Add a title....')
   const [desc,setDesc]=useState('Add some desc....')
   const [selectedIdx,setSelectedIdx]=useState(0)
   const tags=['None','NSFW','Mood','Quotes','Shitpost'];
+  
+  const dispatch = useDispatch();
   const handlePost = () =>{
     setOpenPost(false);
+    setLoading(true);
     // Tạo post
     const newPost ={
       title:title,
       description:desc,
       tag:selectedIdx,
     }
-    
+    setTimeout(() => {
+      dispatch(createPost(newPost));
+      setLoading(false);
+    }, 500);
   }
     return (
         <section className="makepost-container">

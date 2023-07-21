@@ -57,10 +57,10 @@ function Edit(props) {
                 <Input label="About" data={user.about} setData={setAbout} inputType="textarea" classStyle="input-about" />
             <label> Profile Picture</label>
             <div className="input-image-container">
-                {avatarUrl.map((url)=>{
+                {avatarUrl.map((url,idx)=>{
                     return(
                         <>
-                        <img onClick={(e)=> setUrl(e.target.src)} src={url} alt="" className='input-image'/>
+                        <img key={idx} onClick={(e)=> setUrl(e.target.src)} src={url} alt="" className='input-image'/>
                         </>
                     )
                 })}
