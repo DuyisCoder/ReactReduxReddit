@@ -3,7 +3,8 @@ import { useState } from 'react';
 import {useSelector,useDispatch} from 'react-redux'
 import './Edit.css'
 import Input from '../InputFiels/Input';
-import { update } from '../../Redux/UserSlice';
+// import { update } from '../../Redux/UserSlice';
+import { updateUser } from '../../Redux/apiRequets';
 function Edit(props) {
     const avatarUrl=[
         "https://i.redd.it/lfs78sg5t7w61.png",
@@ -32,15 +33,16 @@ function Edit(props) {
     const handleSubmit = (e) =>{
         e.preventDefault();
         setEdit(false);
-        const updateUser= {
+        const updatedUser= {
             name:name,
             age:age,
             about:about,
             avatarUrl:url,
             themeColor:theme,
-        }
+        };
         // dispatch 1 action là update bên UserSlice và phải export ra và import ms sài đc
-        dispatch(update(updateUser)); 
+        // dispatch(update(updateUser)); 
+        updateUser(updatedUser,dispatch);
     
     }
     return (
