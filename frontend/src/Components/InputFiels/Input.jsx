@@ -1,4 +1,6 @@
 import '../Edit/Edit.css'
+import '../Post/Post.css'
+
 function Input(props) {
     const {label,data,setData,inputType,classStyle} =props;
     return (
