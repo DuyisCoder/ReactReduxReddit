@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
+import {useSelector,useDispatch} from 'react-redux'
 import './Edit.css'
 import Input from '../InputFiels/Input';
-function Edit() {
+import { update } from '../../Redux/UserSlice';
+function Edit(props) {
     const avatarUrl=[
         "https://i.redd.it/lfs78sg5t7w61.png",
         "https://preview.redd.it/ivquvp9s7o281.png?width=587&format=png&auto=webp&s=e37d16f40b1605f7d7199158a6261fc051e58949",
@@ -13,22 +15,44 @@ function Edit() {
         "https://i.redd.it/sotj4t8vlnw81.png",
         "https://i.redd.it/8lhmmwdcx4381.png",
     ];
+    const {setEdit}=props;
+    // useSelector là thằng để lấy dữ liệu
+    // userDispatch dùng để truyền dữ liệu vào store
+    const dispatch=useDispatch();
 
-    const[name,setName]=useState("Duy")
-    const[age,setAge]=useState(20)
-    const[about,setAbout]=useState("I'm developer ")
+    const user=useSelector((state)=>state.user) //user bên store
+    
+
+    const[name,setName]=useState(user.name)
+    const[age,setAge]=useState(user.age)
+    const[about,setAbout]=useState(user.about)
     const[theme,setTheme]=useState("#ff9051")
-    const[url,setUrl]=useState("https://i.redd.it/lfs78sg5t7w61.png")
+    const[url,setUrl]=useState(user.avatarUrl)
+
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        setEdit(false);
+        const updateUser= {
+            name:name,
+            age:age,
+            about:about,
+            avatarUrl:url,
+            themeColor:theme,
+        }
+        // dispatch 1 action là update bên UserSlice và phải export ra và import ms sài đc
+        dispatch(update(updateUser)); 
+    
+    }
     return (
         <>
-           <form action="">
+           <form onSubmit={handleSubmit}>
             <section className="edit-container">
                 <button className="close"> Save </button>
             <div className="edit-profile">Edit profile</div>
             <div className="input-container">
-                <Input label="Display name" data={name} setData={setName} />
-                <Input label="Age " data={age} setData={setAge} />
-                <Input label="About" data={about} setData={setAbout} inputType="textarea" classStyle="input-about" />
+                <Input label="Display name" data={user.name} setData={setName} />
+                <Input label="Age " data={user.age} setData={setAge} />
+                <Input label="About" data={user.about} setData={setAbout} inputType="textarea" classStyle="input-about" />
             <label> Profile Picture</label>
             <div className="input-image-container">
                 {avatarUrl.map((url)=>{

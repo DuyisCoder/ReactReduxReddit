@@ -1,24 +1,27 @@
+import { useSelector } from 'react-redux';
 import './Header.css'
 function Header(props) {
     const {setEdit}=props;
     const handleEdit = () => {
         setEdit(true)
     }
+    const user = useSelector((state)=>state.user)
+   
     return (
         <>
         <header 
         style={{
-            backgroundColor:"#ff9051",
-            backgroundImage:"linear-gradient(180deg,#ff9051 2% , #ff9051,65%,#181818 100%)" 
+            backgroundColor:`${user.themeColor}`,
+            backgroundImage:`linear-gradient(180deg,${user.themeColor} 2% , ${user.themeColor},65%,#181818 100%)` 
             }}>
             <div className="info-container">
                 <div className="info-edit" onClick={handleEdit}>
                     Edit
                 </div>
-                <img src="https://i.redd.it/lfs78sg5t7w61.png" alt="redit" className="info-ava" />
-                <div className="info-username">Minh Duy</div>
-                <div className="info-age">20 tuổi</div>
-                <div className="info-about">I'm develop</div>
+                <img src={user.avatarUrl} alt="redit" className="info-ava" />
+                <div className="info-username">{user.name}</div>
+                <div className="info-age">{user.age}</div>
+                <div className="info-about">{user.about}</div>
             </div>
         </header>
         </>
